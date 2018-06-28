@@ -1,79 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
-        <record id="mrp_bom_form_view_mo_bom" model="ir.ui.view">
-            <field name="name">mrp_bom_form_view_mo_bom</field>
-            <field name="model">mrp.bom</field>
-            <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
-            <field name="arch" type="xml">
-                <xpath expr="//notebook/page/field[@name='bom_line_ids']/tree/field[@name='product_qty']" position="after">
-                    <field name="bom_p" sum='Porcentaje'/>
-                </xpath>
+  <data>
+    <record id="mrp_bom_form_view_mo_bom" model="ir.ui.view">
+      <field name="name">mrp_bom_form_view_mo_bom</field>
+      <field name="model">mrp.bom</field>
+      <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//notebook/page/field[@name='bom_line_ids']/tree/field[@name='product_qty']" position="after">
+          <field name="bom_p" sum='Porcentaje'/>
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='bom_line_ids']/tree/field[@name='product_uom_id']" position="after">
+          <field name="obligatorio"/>
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='bom_line_ids']/tree/field[@name='attribute_value_ids']" position="after">
+          <field name="formula_p"/>
+        </xpath>
+      </field>
+    </record>
 
-                <xpath expr="//notebook/page/field[@name='bom_line_ids']/tree/field[@name='product_uom_id']" position="after">
-                    <field name="obligatorio" />
-                </xpath>
-
-                <xpath expr="//notebook/page/field[@name='bom_line_ids']/tree/field[@name='attribute_value_ids']" position="after">
-                    <field name="formula_p" />
-                </xpath>
-
-            </field>
-        </record>
-
-
-
-        <record id="mrp_production_form_view_mo_bom" model="ir.ui.view">
-            <field name="name">mrp_production_form_view_mo_bom</field>
-            <field name="model">mrp.production</field>
-            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
-            <field name="arch" type="xml">
-                <field name="routing_id" position="replace">
-                    <field name="routing_id" groups="mrp.group_mrp_routings" invisible='1'/>
-                </field>
-
-                <field name="routing_id" position="after">
-                    <label for="routing_id"/>
-                    <div class="o_row">
-                        <field name="routing_id" groups="mrp.group_mrp_routings"/>
-                        <button type="action"
-                        name="%(raloy_mrp.action_change_route)d"
-                        string="Actualizar" states="confirmed,planned,progress" class="oe_link" attrs="{'invisible': [('state','=','done')]}"/>
-                    </div> 
-                </field>
-
-                <xpath expr="//notebook/page/field[@name='move_raw_ids']/tree/field[@name='product_uom_qty']" position="replace">
-                    <field name="product_uom_qty" readonly="1" attrs="{'required': [('product_id', '!=', False)]}" string="To Consume" sum='total'/>
-                    <!-- <field name="product_uom_qty_original" readonly="1" /> -->
-                </xpath>
-
-                <xpath expr="//notebook/page/field[@name='move_raw_ids']/tree/field[@name='quantity_done']" position="after">
-                    <!-- <field name="bom_p" readonly="1" sum='% Total LDM'/> -->
-                    
-
-                    <field name="obligatorio" readonly="1" />
-                    <field name="formula_p" readonly="1" />
-                    <field name="real_p" />
-                    <field name="densidad" />
-                    <field name="kilos"/>
-                    <field name="unit_factor" invisible="1"/>
-                    <field name="porcentaje" sum='Porcentaje total'/>
-                </xpath>
-
-                <!-- <xpath expr="//notebook/page/field[@name='move_raw_ids']" position="attributes">
-                    <attribute name="domain">[('state','!=','cancel')]</attribute>
-                </xpath> -->
-
-                <!-- ELEMENTO DE MODULO STOCK MOVE ADD, SE ELIMINA BOTON CANCELAR -->
-                <button name="action_consume_cancel" position="replace">
-                    <button name="action_consume_cancel_window" string="Cancel Move" type="object" icon="fa-times-circle" states="draft,waiting,confirmed,assigned" class="oe_edit_only"/>
-                </button>
-
-
-            </field>
-        </record>
-
-
-    </data>
+    <record id="mrp_production_form_view_mo_bom" model="ir.ui.view">
+      <field name="name">mrp_production_form_view_mo_bom</field>
+      <field name="model">mrp.production</field>
+      <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+      <field name="arch" type="xml">
+        <field name="routing_id" position="replace">
+          <field name="routing_id" groups="mrp.group_mrp_routings" invisible='1'/>
+        </field>
+        <field name="routing_id" position="after">
+          <label for="routing_id"/>
+          <div class="o_row">
+            <field name="routing_id" groups="mrp.group_mrp_routings"/>
+            <button type="action" name="%(raloy_mrp.action_change_route)d" string="Actualizar" states="confirmed,planned,progress" class="oe_link" attrs="{'invisible': [('state','=','done')]}"/>
+          </div>
+        </field>
+        <xpath expr="//notebook/page/field[@name='move_raw_ids']/tree/field[@name='product_uom_qty']" position="replace">
+          <field name="product_uom_qty" readonly="1" attrs="{'required': [('product_id', '!=', False)]}" string="To Consume" sum='total'/>
+        </xpath>
+        <xpath expr="//notebook/page/field[@name='move_raw_ids']/tree/field[@name='quantity_done']" position="after">
+          <field name="obligatorio" readonly="1"/>
+          <field name="formula_p" readonly="1"/>
+          <field name="real_p"/>
+          <field name="densidad"/>
+          <field name="kilos"/>
+          <field name="unit_factor" invisible="1"/>
+          <field name="porcentaje" sum='Porcentaje total'/>
+        </xpath>
+        <!-- ELEMENTO DE MODULO STOCK MOVE ADD, SE ELIMINA BOTON CANCELAR -->
+        <button name="action_consume_cancel" position="replace">
+          <button name="action_consume_cancel_window" string="Cancel Move" type="object" icon="fa-times-circle" states="draft,waiting,confirmed,assigned" class="oe_edit_only"/>
+        </button>
+      </field>
+    </record>
+  </data>
 </openerp>
-

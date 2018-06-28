@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-import change_route
-import change_product_qty
+from . import change_route
+from . import change_product_qty
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

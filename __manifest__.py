@@ -19,25 +19,24 @@
 #
 ##############################################################################
 {
-    'name' : 'Campos de porcentaje en listas de materiales',
-    'version' : '1.0',
-    'author' : 'Humanytek',
-    'category' : 'Mrp',
-    'description' : """
+    'name': 'Campos de porcentaje en listas de materiales',
+    'version': '1.0.1',
+    'author': 'Humanytek',
+    'category': 'Mrp',
+    'description': """
     Agrega campos de porcentaje en listas de materiales
     de ordenes de produccion
     """,
-    'depends' : ['mrp_add_remove_products','mrp_default_locations'],
+    'depends': [
+        'mrp_add_remove_products',
+        'mrp_default_locations',
+    ],
     'data': [
         'wizard/change_route_view.xml',
         'product_view.xml',
         'mrp_view.xml',
         'stock_move_add_view.xml',
     ],
-
-
-    'installable': True,
-    'auto_install': False,
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,97 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data>
+  <data>
 
-        <!-- Production Order -->  
-        <record id="view_mo_add_product_form_mo_bom" model="ir.ui.view">
-            <field name="name">view_mo_add_product_form_mo_bom</field>
-            <field name="model">stock.move.add</field>
-            <field name="inherit_id" ref="mrp_add_remove_products.view_mo_add_product_form"/>
-            <field name="arch" type="xml">
-                <field name="product_id" position='after'>
-                    <field name="mo_id" invisible='1'/>
-                    <field name="routing_id" invisible='1'/>
-                    <field name="operation_id"  domain="[('routing_id', '=', routing_id)]" options="{'no_quick_create':True,'no_create_edit':True}"/>
-                </field>
-                <!-- PERMITE SELECCIONAR CUALQUIER UBICACION -->
-                <field name="location_id" position="attributes">
-                    <attribute name='domain'></attribute>
-                </field>
-                <field name="location_dest_id" position="attributes">
-                    <attribute name='domain'></attribute>
-                </field>
-            </field>
-        </record>
+    <!-- Production Order -->
+    <record id="view_mo_add_product_form_mo_bom" model="ir.ui.view">
+      <field name="name">view_mo_add_product_form_mo_bom</field>
+      <field name="model">stock.move.add</field>
+      <field name="inherit_id" ref="mrp_add_remove_products.view_mo_add_product_form"/>
+      <field name="arch" type="xml">
+        <field name="product_id" position='after'>
+          <field name="mo_id" invisible='1'/>
+          <field name="routing_id" invisible='1'/>
+          <field name="operation_id" domain="[('routing_id', '=', routing_id)]" options="{'no_quick_create':True,'no_create_edit':True}"/>
+        </field>
+        <!-- PERMITE SELECCIONAR CUALQUIER UBICACION -->
+        <field name="location_id" position="attributes">
+          <attribute name='domain'></attribute>
+        </field>
+        <field name="location_dest_id" position="attributes">
+          <attribute name='domain'></attribute>
+        </field>
+      </field>
+    </record>
 
-
-
-
-        <record id="view_stock_move_cancel" model="ir.ui.view">
-            <field name="name">view_stock_move_cancel</field>
-            <field name="model">stock.move</field>
-            <field name="priority">1000</field>
-            <field name="arch" type="xml">
-                <form string="Cancelar">
-                    <!-- <button name="action_consume_cancel" string="Cancel Move" type="object" icon="fa-times-circle" states="draft,waiting,confirmed,assigned" class="oe_edit_only"/> -->
-                    
-                    <div class="oe_edit_only">
-                        <p>
-                            ¿Seguro que desea cancelar material a consumir?
-                        </p>
-                        <field name='state' invisible='1'/>
-                        <button name="action_consume_cancel" string="Cancel Move" type="object" icon="fa-times-circle" states="draft,waiting,confirmed,assigned" />
-                        <!-- <button name="open_parent" type="object" string="(edit)" class="oe_link"
-                                        attrs="{'invisible': ['|', ('parent_id', '=', False), ('type', '!=', 'contact')]}"/> -->
-                    </div>
-                    
-                    <footer>
-                        <center>
-                            <button string="Salir" class="oe_link" special="cancel" />
-                        </center>
-                    </footer>
-                </form>
-            </field>
-        </record>
-
-<!--         <record id="view_stock_move_lots" model="ir.ui.view">
-            <field name="name">stock.move.lots.form</field>
-            <field name="model">stock.move</field>
-            <field name="priority">1000</field>
-            <field name="arch" type="xml">
-                <form string="Lots">
-                    <field name="state" invisible="1"/>
-                    <group>
-                        <group>
-                            <field name="product_id" readonly="1"/>
-                            <label for="quantity_done"/>
-                            <div>
-                                <field name="quantity_done" readonly="1" class="oe_inline"/>
-                                <field name="product_uom" readonly="1" class="oe_inline" groups="product.group_uom"/>
-                            </div>
-                            <field name="is_done" invisible="1"/>
-                            <field name="workorder_id" invisible="1"/>
-                        </group>
-                    </group>
-                    <field name="active_move_lot_ids" attrs="{'readonly': [('is_done', '=', True)]}" context="{'default_workorder_id': workorder_id}">
-                        <tree editable="bottom" decoration-success="quantity==quantity_done" decoration-danger="(quantity &gt; 0) and (quantity_done&gt;quantity)">
-                            <field name="lot_id" domain="[('product_id', '=', parent.product_id)]" context="{'default_product_id': parent.product_id}"/>
-                            <field name="quantity" invisible="not context.get('show_reserved') or context.get('serial') or context.get('state_done')" readonly="1"/>
-                            <field name="quantity_done"/>
-                            <button name="do_minus" type="object" icon="fa-minus-square" attrs="{'invisible': [('quantity_done', '&lt;=', 0.99)]}" invisible="not context.get('show_reserved') or context.get('state_done')"/>
-                            <button name="do_plus" type="object" icon="fa-plus-square" attrs="{'invisible': [('plus_visible', '=', False)]}" invisible="not context.get('show_reserved') or context.get('state_done')"/>
-                            <field name="plus_visible" invisible="1"/>
-                            <field name="workorder_id" invisible="1"/>
-                            <field name="done_wo" invisible="1"/>
-                        </tree>
-                    </field>
-                    <footer class="oe_edit_only">
-                        <button name="save" type="object" string="Save" class="oe_highlight"/>
-                        <button string="Discard" special="cancel"/>
-                    </footer>
-                </form>
-            </field>
-        </record> -->
-
-
-    </data>
+    <record id="view_stock_move_cancel" model="ir.ui.view">
+      <field name="name">view_stock_move_cancel</field>
+      <field name="model">stock.move</field>
+      <field name="priority">1000</field>
+      <field name="arch" type="xml">
+        <form string="Cancelar">
+          <div class="oe_edit_only">
+            <p>
+              ¿Seguro que desea cancelar material a consumir?
+            </p>
+            <field name='state' invisible='1'/>
+            <button name="action_consume_cancel" string="Cancel Move" type="object" icon="fa-times-circle" states="draft,waiting,confirmed,assigned"/>
+          </div>
+          <footer>
+            <center>
+              <button string="Salir" class="oe_link" special="cancel"/>
+            </center>
+          </footer>
+        </form>
+      </field>
+    </record>
+  </data>
 </openerp>

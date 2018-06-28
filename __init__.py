@@ -19,13 +19,11 @@
 #
 ##############################################################################
 
-import wizard
-import stock_move_add
-import product
-import stock
-import mrp_bom
-import mrp
-
-#import mrp
+from . import wizard
+from . import stock_move_add
+from . import product
+from . import stock
+from . import mrp_bom
+from . import mrp
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

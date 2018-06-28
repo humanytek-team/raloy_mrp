@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>
+  <data>
 
-        <record id="product_category_form_view_mo_bom" model="ir.ui.view">
-            <field name="name">product_category_form_view_mo_bom</field>
-            <field name="model">product.category</field>
-            <field name="priority">1</field>
-            <field name="inherit_id" ref="product.product_category_form_view"/>
-            <field name="arch" type="xml">
+    <record id="product_category_form_view_mo_bom" model="ir.ui.view">
+      <field name="name">product_category_form_view_mo_bom</field>
+      <field name="model">product.category</field>
+      <field name="priority">1</field>
+      <field name="inherit_id" ref="product.product_category_form_view"/>
+      <field name="arch" type="xml">
+        <field name="type" position="after">
+          <field name="mrp_bom_modification"/>
+        </field>
+      </field>
+    </record>
 
-                <field name="type" position="after">
-                	<field name="mrp_bom_modification" />
-                    <!-- attrs="{'readonly': [('state', 'in', ('planned','progress', 'cancel','done'))]}" /> -->
-                </field>
-            </field>
-        </record>
-
-    </data>
+  </data>
 </openerp>
