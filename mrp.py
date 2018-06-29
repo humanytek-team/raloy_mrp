@@ -40,9 +40,8 @@ class MrpProduction(models.Model):
 
     def get_min_qty(self, move, production_qty):
         """OBTIENE EL % CORRESPONDIENTE A LA CANTIDAD ESTABLECIDA EN LA LISTA DE MATERIAL."""
-        min_qty = 0
         bom_qty = move.bom_line_id.product_qty
-        formula_p = move.formula_p
+        formula_p = round(move.formula_p, 5)
         min_qty = ((bom_qty * formula_p) / 100) * production_qty
         return min_qty
 

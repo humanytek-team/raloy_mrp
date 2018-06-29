@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Campos de porcentaje en listas de materiales',
-    'version': '1.0.1',
+    'version': '1.0.2',
     'author': 'Humanytek',
     'category': 'Mrp',
     'description': """
