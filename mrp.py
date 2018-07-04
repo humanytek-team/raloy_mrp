@@ -4,6 +4,7 @@ from openerp.exceptions import ValidationError
 
 
 _ALLOWED_DIFFERENCE = .0000001  # MARGEN PERMITIDO DE DIFERENCIA ENTRE 2 NUMEROS
+_ALLOWED_DIFFERENCE_PERC = 0.002
 
 
 class MrpProduction(models.Model):
@@ -72,14 +73,13 @@ class MrpProduction(models.Model):
                         self.check_move_line(move)
                     production_total = sum([move.product_uom_qty for move in production.move_raw_ids
                                             if move.state not in ('cancel')])
-                differencia = production_total - bom_total
-                if abs(differencia) > _ALLOWED_DIFFERENCE:
-                    if differencia < 0:
-                        str_differencia = str('{0:f}'.format(differencia))
-                        raise ValidationError(_('No alcanza el 100% de cantidad de produccion necesario' +
-                                                '\nTotal Lista de materiales = ' + str(bom_total) +
-                                                '\nTotal Materiales a consumir = ' + str(production_total) +
-                                                '\nDiferencia: ' + str(str_differencia)))
+                differencia_perc = bom_total / production_total
+                if differencia_perc - 1 > _ALLOWED_DIFFERENCE_PERC:
+                    str_differencia = str('{0:f}'.format((1 - differencia_perc) * 100))
+                    raise ValidationError(_('No alcanza el 100% de cantidad de produccion necesario' +
+                                            '\nTotal Lista de materiales = ' + str(bom_total) +
+                                            '\nTotal Materiales a consumir = ' + str(production_total) +
+                                            '\nDiferencia porcentual: ' + str(str_differencia)))
     # HEREDA METODOS EXISTENTES Y AGREGA CHECKEO DE PORCENTAGES
 
     @api.multi
