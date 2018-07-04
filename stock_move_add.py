@@ -75,8 +75,14 @@ class StockMoveAdd(models.TransientModel):
                     real_p = 0
                     if production.product_qty > 0:
                         real_p = ((move.product_qty + qty_in_line_uom) * 100) / production.product_qty
-                    vals = {'real_p': real_p, 'product_uom_qty': move.product_qty + qty_in_line_uom, 'unit_factor': new_qty / (production.product_qty - production.qty_produced)}
+                    vals = {
+                        'real_p': real_p,
+                        'product_uom_qty': move.product_qty + qty_in_line_uom,
+                        'unit_factor': new_qty / (production.product_qty - production.qty_produced),
+                    }
                     #############################
                     self.env['stock.move'].browse(move.id).write(vals)
                     break
+        else:
+            self.add_production_consume_line(new_move, production)
         return True
