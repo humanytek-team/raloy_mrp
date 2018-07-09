@@ -47,7 +47,7 @@
         </xpath>
         <!-- ELEMENTO DE MODULO STOCK MOVE ADD, SE ELIMINA BOTON CANCELAR -->
         <button name="action_consume_cancel" position="replace">
-          <button name="action_consume_cancel_window" string="Cancel Move2" type="object" icon="fa-times-circle" class="oe_edit_only" attrs="{'invisible': ['|', ('obligatorio', '=', True), ('state', 'not in', ['draft','waiting','confirmed','assigned'])]}"/>
+          <button name="action_consume_cancel_window" string="Cancel Move" type="object" icon="fa-times-circle" class="oe_edit_only" attrs="{'invisible': ['|', ('obligatorio', '=', True), ('state', 'not in', ['draft','waiting','confirmed','assigned'])]}"/>
         </button>
       </field>
     </record>
