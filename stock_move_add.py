@@ -16,6 +16,24 @@ class StockMoveAdd(models.TransientModel):
     routing_id = fields.Many2one('mrp.routing', 'Routing', required=True)
     operation_id = fields.Many2one('mrp.routing.workcenter', 'Consumido en operacion', required=True)
     mo_id = fields.Many2one('mrp.production', 'Manufacturing Order', required=True)
+    workorder_id = fields.Many2one(
+        comodel_name='mrp.workorder',
+        domain='[("production_id", "=", mo_id)]',
+    )
+    workorder_count = fields.Integer(
+        related='mo_id.workorder_count',
+    )
+
+    def add_stock_move_lots_line(self, new_move):
+        print('HOLA')
+        for lot in new_move.workorder_id.active_move_lot_ids:
+            if lot.product_id == new_move.product_id:
+                print(lot.product_id, new_move.product_qty)
+                lot.quantity += new_move.product_qty
+                lot.quantity_done += new_move.product_qty
+                new_move.workorder_id.state = 'progress'
+                break
+        print('ADIOS')
 
     @api.model
     def default_get(self, fields):
@@ -82,7 +100,9 @@ class StockMoveAdd(models.TransientModel):
                     }
                     #############################
                     self.env['stock.move'].browse(move.id).write(vals)
+                    self.add_stock_move_lots_line(new_move)
                     break
         else:
             self.add_production_consume_line(new_move, production)
+            self.add_stock_move_lots_line(new_move)
         return True

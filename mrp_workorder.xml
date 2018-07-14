@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+    <record id="raloy_mrp_production_workcenter_form_view_inherit" model="ir.ui.view">
+      <field name="name">raloy_mrp.mrp.production.work.order.form</field>
+      <field name="model">mrp.workorder</field>
+      <field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view_inherit"/>
+      <field name="arch" type="xml">
+        <button name="record_production" position="attributes">
+          <attribute name='attrs'>{'invisible': ['|', ('working_state', '=', 'blocked'), ('state', '!=', 'progress')]}</attribute>
+        </button>
+      </field>
+    </record>
+  </data>
+</odoo>
