@@ -9,6 +9,8 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
+_ALLOWED_DIFFERENCE_PERC = 0.002
+
 
 class StockMoveAdd(models.TransientModel):
     _inherit = "stock.move.add"
@@ -25,15 +27,14 @@ class StockMoveAdd(models.TransientModel):
     )
 
     def add_stock_move_lots_line(self, new_move):
-        print('HOLA')
         for lot in new_move.workorder_id.active_move_lot_ids:
             if lot.product_id == new_move.product_id:
-                print(lot.product_id, new_move.product_qty)
-                lot.quantity += new_move.product_qty
-                lot.quantity_done += new_move.product_qty
+                if not lot.quantity or abs(lot.quantity / new_move.product_qty) < 1 + _ALLOWED_DIFFERENCE_PERC:
+                    lot.quantity = new_move.product_qty
+                if not lot.quantity_done or abs(lot.quantity_done / new_move.product_qty) < 1 + _ALLOWED_DIFFERENCE_PERC:
+                    lot.quantity_done = new_move.product_qty
                 new_move.workorder_id.state = 'progress'
                 break
-        print('ADIOS')
 
     @api.model
     def default_get(self, fields):
