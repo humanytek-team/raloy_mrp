@@ -29,11 +29,12 @@ class StockMoveAdd(models.TransientModel):
     def add_stock_move_lots_line(self, new_move):
         for lot in new_move.workorder_id.active_move_lot_ids:
             if lot.product_id == new_move.product_id:
-                if not lot.quantity or abs(lot.quantity / new_move.product_qty) < 1 + _ALLOWED_DIFFERENCE_PERC:
-                    lot.quantity = new_move.product_qty
-                if not lot.quantity_done or abs(lot.quantity_done / new_move.product_qty) < 1 + _ALLOWED_DIFFERENCE_PERC:
-                    lot.quantity_done = new_move.product_qty
-                new_move.workorder_id.state = 'progress'
+                for move in new_move.workorder_id.production_id.move_raw_ids:
+                    if move.product_id == new_move.product_id and not move.is_done:
+                        lot.quantity = move.product_uom_qty
+                        lot.quantity_done = move.product_uom_qty
+                        new_move.workorder_id.state = 'progress'
+                        break
                 break
 
     @api.model
