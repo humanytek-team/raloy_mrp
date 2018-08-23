@@ -12,7 +12,8 @@ class ChangeProductionQty(models.TransientModel):
         res = super(ChangeProductionQty, self).change_prod_qty()
         # SE RECALCULAN LAS CANTIDADES DE LOS PRODUCTOS A CONSUMIR BASADO EN LA COLUMNA '% REAL'
         for wizard in self:
-            production = wizard.mo_id
-            for move in production.move_raw_ids:
-                move.compute_uom_qty()
+            if wizard.mo_id.product_id.categ_id.mrp_bom_modification:
+                production = wizard.mo_id
+                for move in production.move_raw_ids:
+                    move.compute_uom_qty()
         return res
