@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Campos de porcentaje en listas de materiales',
-    'version': '1.6.1',
+    'version': '1.7.0',
     'author': 'Humanytek',
     'category': 'Mrp',
     'description': """
@@ -30,13 +30,14 @@
     'depends': [
         'mrp_add_remove_products',
         'mrp_default_locations',
+        'mrp_security_label',
     ],
     'data': [
-        'mrp_view.xml',
         'mrp_workorder.xml',
-        'product_view.xml',
         'stock_move_add_view.xml',
         'wizard/change_route_view.xml',
+        'mrp_view.xml',
+        'product_view.xml',
     ],
 }
 

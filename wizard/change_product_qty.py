@@ -16,4 +16,6 @@ class ChangeProductionQty(models.TransientModel):
                 production = wizard.mo_id
                 for move in production.move_raw_ids:
                     move.compute_uom_qty()
+            for workorder in wizard.mo_id.workorder_ids:
+                workorder._onchange_qty_producing()
         return res
